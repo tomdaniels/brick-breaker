@@ -28,7 +28,7 @@ public class GamePlay extends JPanel implements KeyListener, ActionListener {
     private MapGenerator brickMatrix;
 
     public GamePlay() {
-        brickMatrix = new MapGenerator(3, 7);
+        brickMatrix = new MapGenerator(4, 10);
         addKeyListener(this);
         setFocusable(true);
         setFocusTraversalKeysEnabled(false);
@@ -38,23 +38,23 @@ public class GamePlay extends JPanel implements KeyListener, ActionListener {
 
     public void paint(Graphics g) {
         // background
-        g.setColor(Color.white);
+        g.setColor(Color.black);
         g.fillRect(1, 1, 692, 592);
 
         brickMatrix.draw((Graphics2D)g);
 
         // border
-        g.setColor(Color.yellow);
+        g.setColor(Color.white);
         g.fillRect(0, 0, 3, 592);
         g.fillRect(0, 0, 692, 3);
         g.fillRect(691, 0, 3, 592);
 
         // paddle
-        g.setColor(Color.blue);
+        g.setColor(Color.white);
         g.fillRect(playerX, 550, 100, 8);
 
         // ball
-        g.setColor(Color.green);
+        g.setColor(Color.lightGray);
         g.fillOval(ballposX, ballposY, 20, 20);
 
         g.dispose();
