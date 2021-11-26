@@ -7,6 +7,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
+import java.util.Random;
 
 public class GamePlay extends JPanel implements KeyListener, ActionListener {
 
@@ -56,6 +57,23 @@ public class GamePlay extends JPanel implements KeyListener, ActionListener {
         // ball
         g.setColor(Color.lightGray);
         g.fillOval(ballposX, ballposY, 20, 20);
+
+        g.setColor(Color.white);
+        g.setFont(new Font("serif", Font.BOLD, 25));
+        g.drawString("Your Score: " + score, 490, 25);
+
+        if (ballposY > 570) {
+            play = false;
+            ballXdir = 0;
+            ballYdir = 0;
+
+            g.setColor(Color.red);
+            g.setFont(new Font("serif", Font.BOLD, 15));
+            g.drawString("Game over, final score: " + score, 250, 300);
+
+            g.drawString("Press [Enter] to restart", 260, 320);
+
+        }
 
         g.dispose();
     };
