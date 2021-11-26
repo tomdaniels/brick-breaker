@@ -23,7 +23,7 @@ public class GamePlay extends JPanel implements KeyListener, ActionListener {
     private int ballposX= 120;
     private int ballposY = 350;
     private int ballXdir = -1;
-    private int ballYdir = 2;
+    private int ballYdir = -2;
 
     public GamePlay() {
         addKeyListener(this);
@@ -58,6 +58,25 @@ public class GamePlay extends JPanel implements KeyListener, ActionListener {
     @Override
     public void actionPerformed(ActionEvent e) {
         timer.start();
+
+        if (play) {
+            if(new Rectangle(ballposX, ballposY, 20, 30).intersects(new Rectangle(playerX, 550, 100, 8))) {
+                ballYdir = -ballYdir;
+            }
+            ballposX += ballXdir;
+            ballposY += ballYdir;
+
+            if(ballposX < 0) {
+                ballXdir = -ballXdir;
+            } // bounce off the walls
+            if(ballposY < 0) {
+                ballYdir = -ballYdir;
+            }
+
+            if(ballposX > 670) {
+                ballXdir = -ballXdir;
+            }
+        }
         repaint();
     }
 
