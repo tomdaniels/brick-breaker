@@ -25,10 +25,10 @@ public class GamePlay extends JPanel implements KeyListener, ActionListener {
     private int ballXdir = -1;
     private int ballYdir = -2;
 
-    private MapGenerator boardMatrix;
+    private MapGenerator brickMatrix;
 
     public GamePlay() {
-        boardMatrix = new MapGenerator(3, 7);
+        brickMatrix = new MapGenerator(3, 7);
         addKeyListener(this);
         setFocusable(true);
         setFocusTraversalKeysEnabled(false);
@@ -41,7 +41,7 @@ public class GamePlay extends JPanel implements KeyListener, ActionListener {
         g.setColor(Color.white);
         g.fillRect(1, 1, 692, 592);
 
-        boardMatrix.draw((Graphics2D)g);
+        brickMatrix.draw((Graphics2D)g);
 
         // border
         g.setColor(Color.yellow);
@@ -69,19 +69,19 @@ public class GamePlay extends JPanel implements KeyListener, ActionListener {
                 ballYdir = -ballYdir;
             }
 
-            for (int i = 0; i < boardMatrix.map.length; i++) {
-                for(int j = 0; j < boardMatrix.map[0].length; j++) {
-                    if (boardMatrix.map[i][j] > 0) {
-                        int brickX = j*boardMatrix.brickWidth + 80;
-                        int brickY = i*boardMatrix.brickHeight + 50;
-                        int brickWidth = boardMatrix.brickWidth;
-                        int brickHeight = boardMatrix.brickHeight;
+            for (int i = 0; i < brickMatrix.map.length; i++) {
+                for(int j = 0; j < brickMatrix.map[0].length; j++) {
+                    if (brickMatrix.map[i][j] > 0) {
+                        int brickX = j*brickMatrix.brickWidth + 80;
+                        int brickY = i*brickMatrix.brickHeight + 50;
+                        int brickWidth = brickMatrix.brickWidth;
+                        int brickHeight = brickMatrix.brickHeight;
 
                         Rectangle brickRect = new Rectangle(brickX, brickY, brickWidth, brickHeight);
                         Rectangle ballRect = new Rectangle(ballposX, ballposY, 20, 20);
 
                         if (ballRect.intersects(brickRect)) {
-                            boardMatrix.setBrickValue(0, i, j);
+                            brickMatrix.setBrickValue(0, i, j);
                             totalBricks -= 1;
                             score+=5;
 
