@@ -95,9 +95,6 @@ public class GamePlay extends JPanel implements KeyListener, ActionListener {
                 }
             }
 
-            // new Rect for the ball & brick
-
-
             ballposX += ballXdir;
             ballposY += ballYdir;
 
