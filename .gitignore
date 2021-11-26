@@ -1,0 +1,8 @@
+# editor
+.idea
+
+# compiled code
+/out
+
+# misc
+brick-breaker.iml
