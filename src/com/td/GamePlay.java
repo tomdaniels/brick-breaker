@@ -20,15 +20,15 @@ public class GamePlay extends JPanel implements KeyListener, ActionListener {
 
     private int playerX = 310;
 
-    private int ballposX= 120;
+    private int ballposX = 120;
     private int ballposY = 350;
     private int ballXdir = -1;
     private int ballYdir = -2;
 
-    private MapGenerator map;
+    private MapGenerator boardMatrix;
 
     public GamePlay() {
-        map = new MapGenerator(3, 7);
+        boardMatrix = new MapGenerator(3, 7);
         addKeyListener(this);
         setFocusable(true);
         setFocusTraversalKeysEnabled(false);
@@ -41,7 +41,7 @@ public class GamePlay extends JPanel implements KeyListener, ActionListener {
         g.setColor(Color.white);
         g.fillRect(1, 1, 692, 592);
 
-        map.draw((Graphics2D)g);
+        boardMatrix.draw((Graphics2D)g);
 
         // border
         g.setColor(Color.yellow);
@@ -68,6 +68,36 @@ public class GamePlay extends JPanel implements KeyListener, ActionListener {
             if(new Rectangle(ballposX, ballposY, 20, 30).intersects(new Rectangle(playerX, 550, 100, 8))) {
                 ballYdir = -ballYdir;
             }
+
+            for (int i = 0; i < boardMatrix.map.length; i++) {
+                for(int j = 0; j < boardMatrix.map[0].length; j++) {
+                    if (boardMatrix.map[i][j] > 0) {
+                        int brickX = j*boardMatrix.brickWidth + 80;
+                        int brickY = i*boardMatrix.brickHeight + 50;
+                        int brickWidth = boardMatrix.brickWidth;
+                        int brickHeight = boardMatrix.brickHeight;
+
+                        Rectangle brickRect = new Rectangle(brickX, brickY, brickWidth, brickHeight);
+                        Rectangle ballRect = new Rectangle(ballposX, ballposY, 20, 20);
+
+                        if (ballRect.intersects(brickRect)) {
+                            boardMatrix.setBrickValue(0, i, j);
+                            totalBricks -= 1;
+                            score+=5;
+
+                            if (ballposX + 19 <= brickRect.x || ballposY + 1 >= brickRect.x + brickRect.width) {
+                                ballXdir = -ballXdir;
+                            } else {
+                                ballYdir = -ballYdir;
+                            }
+                        }
+                    }
+                }
+            }
+
+            // new Rect for the ball & brick
+
+
             ballposX += ballXdir;
             ballposY += ballYdir;
 
