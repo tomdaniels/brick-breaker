@@ -21,9 +21,9 @@ public class GamePlay extends JPanel implements KeyListener, ActionListener {
 
     private int playerX = 310;
 
-    private int ballposX = 120;
+    private int ballposX = (int) (Math.random() * 450);
     private int ballposY = 350;
-    private int ballXdir = -1;
+    private int ballXdir = ballposX > 250 ? 1 : -1;
     private int ballYdir = -2;
 
     private MapGenerator brickMatrix;
