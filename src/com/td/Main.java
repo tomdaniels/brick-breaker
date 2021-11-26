@@ -9,9 +9,8 @@ public class Main {
         GamePlay gamePLay = new GamePlay();
 
         // initialize the window
-        obj.setBounds(10,10,700,600);
+        obj.setBounds(10,10,1500,900);
         obj.setTitle("Brick Breaker");
-//        obj.setResizable(false);
         obj.setVisible(true);
         obj.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
     }
