@@ -7,29 +7,41 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
-import java.util.Random;
 
 public class GamePlay extends JPanel implements KeyListener, ActionListener {
 
     private boolean play = false;
     private int score = 0;
 
-    private int totalBricks = 21;
-
     private Timer timer;
     private int delay = 8;
 
     private int playerX = 310;
+
+    private int matrixRows = 2;
+    private int matrixColumns = 2;
+    private int totalBricks = matrixRows * matrixColumns;
 
     private int ballposX = (int) (Math.random() * 450);
     private int ballposY = 350;
     private int ballXdir = ballposX > 275 ? 1 : -1;
     private int ballYdir = -2;
 
+    public void initGameplay() {
+        play = true;
+        ballposX = (int) (Math.random() * 450);
+        ballposY = 350;
+        ballXdir = ballposX > 275 ? 1 : -1;
+        ballYdir = -2;
+        score = 0;
+        totalBricks = 21;
+        brickMatrix = new MapGenerator(matrixRows, matrixColumns);
+    }
+
     private MapGenerator brickMatrix;
 
     public GamePlay() {
-        brickMatrix = new MapGenerator(4, 10);
+        brickMatrix = new MapGenerator(matrixRows, matrixColumns);
         addKeyListener(this);
         setFocusable(true);
         setFocusTraversalKeysEnabled(false);
@@ -70,9 +82,9 @@ public class GamePlay extends JPanel implements KeyListener, ActionListener {
             g.setColor(Color.green);
             g.setFont(new Font("serif", Font.BOLD, 15));
             g.drawString("You WIN, congratulations", 270, 300);
-            g.drawString("Your score: " + score, 285, 320);
+            g.drawString("Your score: " + score, 310, 320);
 
-            g.drawString("Press [Enter] to restart", 280, 340);
+            g.drawString("Press [Enter] to restart", 285, 340);
         }
 
         if (ballposY > 570) {
@@ -179,14 +191,7 @@ public class GamePlay extends JPanel implements KeyListener, ActionListener {
 
         int macShiftCode = 10;
         if (!play && e.getKeyCode() == KeyEvent.VK_SHIFT || e.getKeyCode() == macShiftCode) {
-            play = true;
-            ballposX = (int) (Math.random() * 450);
-            ballposY = 350;
-            ballXdir = ballposX > 275 ? 1 : -1;
-            ballYdir = -2;
-            score = 0;
-            totalBricks = 21;
-            brickMatrix = new MapGenerator(4, 10);
+            initGameplay();
         }
     }
 
