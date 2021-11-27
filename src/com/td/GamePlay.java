@@ -18,8 +18,8 @@ public class GamePlay extends JPanel implements KeyListener, ActionListener {
 
     private int playerX = 310;
 
-    private int matrixRows = 2;
-    private int matrixColumns = 2;
+    private int matrixRows = 3;
+    private int matrixColumns = 7;
     private int totalBricks = matrixRows * matrixColumns;
 
     private int ballposX = (int) (Math.random() * 450);
