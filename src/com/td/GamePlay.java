@@ -13,22 +13,40 @@ public class GamePlay extends JPanel implements KeyListener, ActionListener {
     private boolean play = false;
     private int score = 0;
 
-    private int totalBricks = 21;
-
     private Timer timer;
     private int delay = 8;
 
+
     private int playerX = 310;
 
-    private int ballposX = 120;
+    private int matrixRows = 3;
+    private int matrixColumns = 4;
+    private int totalBricks = matrixRows * matrixColumns;
+
+    private int ballposX = (int) (Math.random() * 450);
     private int ballposY = 350;
-    private int ballXdir = -1;
+    private int ballXdir = ballposX > 275 ? 1 : -1;
     private int ballYdir = -2;
+
+    public void initGameplay(int rows, int cols) {
+        if (rows != 0 && cols != 0) {
+            matrixRows = rows;
+            matrixColumns = cols;
+        }
+        play = true;
+        ballposX = (int) (Math.random() * 450);
+        ballposY = 350;
+        ballXdir = ballposX > 275 ? 1 : -1;
+        ballYdir = -2;
+        score = 0;
+        totalBricks = matrixRows * matrixColumns;
+        brickMatrix = new MapGenerator(matrixRows, matrixColumns);
+    }
 
     private MapGenerator brickMatrix;
 
     public GamePlay() {
-        brickMatrix = new MapGenerator(4, 10);
+        brickMatrix = new MapGenerator(matrixRows, matrixColumns);
         addKeyListener(this);
         setFocusable(true);
         setFocusTraversalKeysEnabled(false);
@@ -56,6 +74,35 @@ public class GamePlay extends JPanel implements KeyListener, ActionListener {
         // ball
         g.setColor(Color.lightGray);
         g.fillOval(ballposX, ballposY, 20, 20);
+
+        g.setColor(Color.white);
+        g.setFont(new Font("serif", Font.BOLD, 25));
+        g.drawString("Your Score: " + score, 490, 25);
+
+        if (totalBricks <= 0) {
+            play = false;
+            ballXdir = 0;
+            ballYdir = 0;
+
+            g.setColor(Color.green);
+            g.setFont(new Font("serif", Font.BOLD, 15));
+            g.drawString("You WIN, congratulations", 270, 300);
+            g.drawString("Your score: " + score, 310, 320);
+
+            g.drawString("Press [Enter] to restart", 285, 340);
+        }
+
+        if (ballposY > 570) {
+            play = false;
+            ballXdir = 0;
+            ballYdir = 0;
+
+            g.setColor(Color.red);
+            g.setFont(new Font("serif", Font.BOLD, 15));
+            g.drawString("Game over, final score: " + score, 270, 300);
+
+            g.drawString("Press [Enter] to restart", 280, 320);
+        }
 
         g.dispose();
     };
@@ -129,20 +176,32 @@ public class GamePlay extends JPanel implements KeyListener, ActionListener {
 
     @Override
     public void keyPressed(KeyEvent e) {
-        if (e.getKeyCode() == KeyEvent.VK_RIGHT) {
-            if (playerX >= 600) {
-                playerX = 600;
-            } else {
-                moveRight();
+        if (totalBricks !=0) {
+            if (e.getKeyCode() == KeyEvent.VK_RIGHT) {
+                if (playerX >= 600) {
+                    playerX = 600;
+                } else {
+                    moveRight();
+                }
+            }
+
+            if (e.getKeyCode() == KeyEvent.VK_LEFT) {
+                if (playerX < 10) {
+                    playerX = 10;
+                } else {
+                    moveLeft();
+                }
             }
         }
 
-        if (e.getKeyCode() == KeyEvent.VK_LEFT) {
-            if (playerX < 10) {
-                playerX = 10;
-            } else {
-                moveLeft();
+
+        int macShiftCode = 10;
+        if (!play && (e.getKeyCode() == KeyEvent.VK_SHIFT || e.getKeyCode() == macShiftCode)) {
+            if (totalBricks == 0) {
+                matrixRows++;
+                matrixColumns++;
             }
+            initGameplay(matrixRows, matrixColumns);
         }
     }
 
