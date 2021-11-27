@@ -16,10 +16,11 @@ public class GamePlay extends JPanel implements KeyListener, ActionListener {
     private Timer timer;
     private int delay = 8;
 
+
     private int playerX = 310;
 
     private int matrixRows = 3;
-    private int matrixColumns = 7;
+    private int matrixColumns = 4;
     private int totalBricks = matrixRows * matrixColumns;
 
     private int ballposX = (int) (Math.random() * 450);
@@ -27,7 +28,11 @@ public class GamePlay extends JPanel implements KeyListener, ActionListener {
     private int ballXdir = ballposX > 275 ? 1 : -1;
     private int ballYdir = -2;
 
-    public void initGameplay() {
+    public void initGameplay(int rows, int cols) {
+        if (rows != 0 && cols != 0) {
+            matrixRows = rows;
+            matrixColumns = cols;
+        }
         play = true;
         ballposX = (int) (Math.random() * 450);
         ballposY = 350;
@@ -192,7 +197,11 @@ public class GamePlay extends JPanel implements KeyListener, ActionListener {
 
         int macShiftCode = 10;
         if (!play && (e.getKeyCode() == KeyEvent.VK_SHIFT || e.getKeyCode() == macShiftCode)) {
-            initGameplay();
+            if (totalBricks == 0) {
+                matrixRows++;
+                matrixColumns++;
+            }
+            initGameplay(matrixRows, matrixColumns);
         }
     }
 
