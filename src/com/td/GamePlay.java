@@ -190,7 +190,7 @@ public class GamePlay extends JPanel implements KeyListener, ActionListener {
 
 
         int macShiftCode = 10;
-        if (!play && e.getKeyCode() == KeyEvent.VK_SHIFT || e.getKeyCode() == macShiftCode) {
+        if (!play && (e.getKeyCode() == KeyEvent.VK_SHIFT || e.getKeyCode() == macShiftCode)) {
             initGameplay();
         }
     }
