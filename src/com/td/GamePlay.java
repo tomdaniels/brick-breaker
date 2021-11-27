@@ -34,7 +34,7 @@ public class GamePlay extends JPanel implements KeyListener, ActionListener {
         ballXdir = ballposX > 275 ? 1 : -1;
         ballYdir = -2;
         score = 0;
-        totalBricks = 21;
+        totalBricks = matrixRows * matrixColumns;
         brickMatrix = new MapGenerator(matrixRows, matrixColumns);
     }
 
@@ -97,7 +97,6 @@ public class GamePlay extends JPanel implements KeyListener, ActionListener {
             g.drawString("Game over, final score: " + score, 270, 300);
 
             g.drawString("Press [Enter] to restart", 280, 320);
-
         }
 
         g.dispose();
@@ -172,19 +171,21 @@ public class GamePlay extends JPanel implements KeyListener, ActionListener {
 
     @Override
     public void keyPressed(KeyEvent e) {
-        if (e.getKeyCode() == KeyEvent.VK_RIGHT) {
-            if (playerX >= 600) {
-                playerX = 600;
-            } else {
-                moveRight();
+        if (totalBricks !=0) {
+            if (e.getKeyCode() == KeyEvent.VK_RIGHT) {
+                if (playerX >= 600) {
+                    playerX = 600;
+                } else {
+                    moveRight();
+                }
             }
-        }
 
-        if (e.getKeyCode() == KeyEvent.VK_LEFT) {
-            if (playerX < 10) {
-                playerX = 10;
-            } else {
-                moveLeft();
+            if (e.getKeyCode() == KeyEvent.VK_LEFT) {
+                if (playerX < 10) {
+                    playerX = 10;
+                } else {
+                    moveLeft();
+                }
             }
         }
 
